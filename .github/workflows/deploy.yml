@@ -1,4 +1,4 @@
-name: Deploy OpenHands no Railway (sem Docker)
+name: Deploy OpenHands no Railway
 
 on:
   push:
@@ -10,18 +10,11 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_KEY }}  # <- aqui usa seu segredo do GitHub
+      RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_KEY }}
 
     steps:
       - name: Checkout do código
         uses: actions/checkout@v3
-
-      - name: Mostrar arquivos para debug
-        run: |
-          echo "Diretório atual:"
-          pwd
-          echo "Conteúdo:"
-          ls -la
 
       - name: Configurar Python
         uses: actions/setup-python@v4
@@ -40,9 +33,11 @@ jobs:
       - name: Instalar Railway CLI
         run: npm install -g @railway/cli
 
+      - name: Fazer login na Railway CLI
+        run: echo "$RAILWAY_API_TOKEN" | railway login --ci
+
       - name: Linkar projeto e serviço Railway
-        run: |
-          railway link --project prolific-curiosity --service dzx-core
+        run: railway link --project prolific-curiosity --service dzx-core
 
       - name: Fazer deploy para o Railway
         run: railway up
