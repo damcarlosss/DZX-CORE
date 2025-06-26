@@ -3,7 +3,7 @@ name: Deploy OpenHands no Railway (sem Docker)
 on:
   push:
     branches:
-      - main  # ajuste se usa outra branch
+      - main
 
 jobs:
   deploy:
@@ -17,9 +17,6 @@ jobs:
 
       - name: Listar arquivos na raiz para debug
         run: ls -la
-
-      - name: Listar arquivos dentro da pasta DZX-CORE para debug
-        run: ls -la DZX-CORE || echo "Pasta DZX-CORE não existe"
 
       - name: Configurar Python
         uses: actions/setup-python@v4
