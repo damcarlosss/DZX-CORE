@@ -154,5 +154,5 @@ For a list of open source projects and licenses used in OpenHands, please see ou
   year={2025},
   url={https://openreview.net/forum?id=OJd3ayDDoF}
 }
-```.
+```
 
