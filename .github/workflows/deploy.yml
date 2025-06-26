@@ -15,10 +15,10 @@ jobs:
       - name: Checkout código
         uses: actions/checkout@v3
 
-      - name: Listar arquivos na raiz para debug
+      - name: Listar arquivos para debug
         run: ls -la
 
-      - name: Configurar Python
+      - name: Instalar Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
@@ -31,9 +31,11 @@ jobs:
 
       - name: Instalar dependências com Poetry
         run: poetry install --no-root
+        working-directory: DZX-CORE
 
       - name: Instalar Railway CLI
         run: npm install -g @railway/cli
 
       - name: Deploy no Railway
+        working-directory: DZX-CORE
         run: railway up
