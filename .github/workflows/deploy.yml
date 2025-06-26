@@ -3,18 +3,20 @@ name: Deploy OpenHands no Railway (sem Docker)
 on:
   push:
     branches:
-      - main
+      - main  # ajuste para sua branch principal
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
-      RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_KEY }}
+      RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_KEY }}  # seu secret Railway
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout código
+        uses: actions/checkout@v3
 
-      - uses: actions/setup-python@v4
+      - name: Configurar Python
+        uses: actions/setup-python@v4
         with:
           python-version: '3.10'
 
@@ -31,4 +33,4 @@ jobs:
         run: npm install -g @railway/cli
 
       - name: Deploy no Railway
-        run: railway up -- --yes
+        run: railway up
