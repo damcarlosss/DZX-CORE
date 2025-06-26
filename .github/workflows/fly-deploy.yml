@@ -1,4 +1,4 @@
-name: Deploy to Fly.io
+name: Deploy para Fly.io
 
 on:
   push:
@@ -7,26 +7,20 @@ on:
 
 jobs:
   deploy:
-    name: Deploy app
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Install Fly CLI
-        run: |
-          curl -L https://fly.io/install.sh | sh
-          echo "$HOME/.fly/bin" >> $GITHUB_PATH
-
-      - name: Create Fly App if not exists
-        run: |
-          fly apps list | grep dzx-core || fly apps create dzx-core --org personal
+      - name: Instala Fly.io CLI
+        uses: superfly/flyctl-actions@1.3
+        with:
+          args: "apps create dzx-core --org damcarlos"
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
-      - name: Deploy to Fly.io
+      - name: Faz deploy para Fly.io
+        uses: superfly/flyctl-actions@1.3
+        with:
+          args: "deploy --remote-only"
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-        run: |
-          fly deploy --remote-only
