@@ -10,9 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_KEY }}
-      RAILWAY_PROJECT_NAME: "prolific-curiosity"
-      RAILWAY_SERVICE_NAME: "dzx-core"
+      RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_KEY }}  # <- aqui usa seu segredo do GitHub
 
     steps:
       - name: Checkout do código
@@ -20,7 +18,9 @@ jobs:
 
       - name: Mostrar arquivos para debug
         run: |
+          echo "Diretório atual:"
           pwd
+          echo "Conteúdo:"
           ls -la
 
       - name: Configurar Python
@@ -42,7 +42,7 @@ jobs:
 
       - name: Linkar projeto e serviço Railway
         run: |
-          railway link --project "$RAILWAY_PROJECT_NAME" --service "$RAILWAY_SERVICE_NAME"
+          railway link --project prolific-curiosity --service dzx-core
 
       - name: Fazer deploy para o Railway
         run: railway up
