@@ -8,33 +8,48 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     env:
       RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_KEY }}
+      RAILWAY_PROJECT_NAME: "prolific-curiosity"
+      RAILWAY_SERVICE_NAME: "dzx-core"
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout do código
+        uses: actions/checkout@v3
 
-      - name: Mostrar diretório atual e arquivos
+      - name: Mostrar arquivos para debug
         run: |
+          echo "Diretório atual:"
           pwd
+          echo "Conteúdo raiz:"
           ls -la
+          echo "Conteúdo de DZX-CORE/"
+          ls -la DZX-CORE
 
       - name: Configurar Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: "3.10"
 
       - name: Instalar Poetry
         run: curl -sSL https://install.python-poetry.org | python3 -
 
-      - name: Configurar PATH para Poetry
+      - name: Configurar PATH do Poetry
         run: echo "$HOME/.local/bin" >> $GITHUB_PATH
 
-      - name: Instalar dependências com Poetry
+      - name: Instalar dependências do projeto
         run: poetry install --no-root
+        working-directory: DZX-CORE
 
       - name: Instalar Railway CLI
         run: npm install -g @railway/cli
 
-      - name: Deploy no Railway
+      - name: Linkar projeto e serviço Railway
+        working-directory: DZX-CORE
+        run: |
+          railway link --project "$RAILWAY_PROJECT_NAME" --service "$RAILWAY_SERVICE_NAME"
+
+      - name: Fazer deploy para o Railway
+        working-directory: DZX-CORE
         run: railway up
