@@ -1,13 +1,12 @@
 FROM docker.all-hands.dev/all-hands-ai/openhands:0.46
 
-# Definir diretório de trabalho
-WORKDIR /app
-
-# Copiar seu código (caso customize microagents)
+# Copia seu código personalizado, se houver
 COPY . /app
 
-# Expor porta padrão
+WORKDIR /app
+
+# Expor a porta padrão do OpenHands
 EXPOSE 3000
 
-# Iniciar o aplicativo no modo normal
+# Comando padrão que já inicia o OpenHands com runtime completo e microagents
 CMD ["docker-entrypoint.sh"]
