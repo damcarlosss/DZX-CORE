@@ -1,4 +1,4 @@
-app = "dzx-core"
+app = "dzx-core"  # substitua pelo nome do seu app
 
 [deploy]
   regions = ["gru"]
