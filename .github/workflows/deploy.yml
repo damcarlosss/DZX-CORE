@@ -20,12 +20,8 @@ jobs:
 
       - name: Mostrar arquivos para debug
         run: |
-          echo "Diretório atual:"
           pwd
-          echo "Conteúdo raiz:"
           ls -la
-          echo "Conteúdo de DZX-CORE/"
-          ls -la DZX-CORE
 
       - name: Configurar Python
         uses: actions/setup-python@v4
@@ -40,16 +36,13 @@ jobs:
 
       - name: Instalar dependências do projeto
         run: poetry install --no-root
-        working-directory: DZX-CORE
 
       - name: Instalar Railway CLI
         run: npm install -g @railway/cli
 
       - name: Linkar projeto e serviço Railway
-        working-directory: DZX-CORE
         run: |
           railway link --project "$RAILWAY_PROJECT_NAME" --service "$RAILWAY_SERVICE_NAME"
 
       - name: Fazer deploy para o Railway
-        working-directory: DZX-CORE
         run: railway up
