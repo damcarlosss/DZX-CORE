@@ -3,7 +3,7 @@ name: Deploy OpenHands no Railway (sem Docker)
 on:
   push:
     branches:
-      - main  # ajuste se usar outra branch
+      - main  # ajuste se usa outra branch
 
 jobs:
   deploy:
@@ -14,6 +14,12 @@ jobs:
     steps:
       - name: Checkout código
         uses: actions/checkout@v3
+
+      - name: Listar arquivos na raiz para debug
+        run: ls -la
+
+      - name: Listar arquivos dentro da pasta DZX-CORE para debug
+        run: ls -la DZX-CORE || echo "Pasta DZX-CORE não existe"
 
       - name: Configurar Python
         uses: actions/setup-python@v4
@@ -28,11 +34,9 @@ jobs:
 
       - name: Instalar dependências com Poetry
         run: poetry install --no-root
-        working-directory: DZX-CORE
 
       - name: Instalar Railway CLI
         run: npm install -g @railway/cli
 
       - name: Deploy no Railway
-        working-directory: DZX-CORE
         run: railway up
