@@ -27,17 +27,17 @@ jobs:
       - name: Configurar PATH do Poetry
         run: echo "$HOME/.local/bin" >> $GITHUB_PATH
 
-      - name: Instalar dependências do projeto
+      - name: Instalar dependências
         run: poetry install --no-root
 
-      - name: Instalar Railway CLI
-        run: npm install -g @railway/cli
+      - name: Instalar Railway CLI mais recente
+        run: npm install -g @railway/cli@latest
 
-      - name: Fazer login na Railway CLI
+      - name: Fazer login Railway CLI (modo CI)
         run: echo "$RAILWAY_API_TOKEN" | railway login --ci
 
       - name: Linkar projeto e serviço Railway
         run: railway link --project prolific-curiosity --service dzx-core
 
-      - name: Fazer deploy para o Railway
+      - name: Deploy para Railway
         run: railway up
