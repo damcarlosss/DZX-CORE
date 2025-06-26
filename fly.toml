@@ -1,4 +1,4 @@
-app = "dzx-core"  # ou o nome do seu app no Fly
+app = "dzx-core"  # substitua pelo nome real do seu app no Fly.io
 
 [build]
   image = "docker.all-hands.dev/all-hands-ai/openhands:0.46"
